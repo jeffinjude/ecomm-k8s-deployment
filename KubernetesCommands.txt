@@ -1,0 +1,33 @@
+1) Command to build and push docker image
+mvn clean package docker:push
+
+2) Command to apply a config file
+kubectl apply -f ecomm-config-server.yml
+
+3) Command to get all config data
+kubectl get all
+
+4) Command to get all services
+kubectl get svc
+kubectl describe svc ecommeureka
+
+5) Command to get logs from a pod
+kubectl logs <podname>
+
+6) Command to stream logs from a pod
+kubectl logs <podname> -f
+
+7) Command to delete all resources from kubernetes cluster
+kubectl delete -f ./
+
+8) Command to start minikube
+minikube start
+
+9) Stop minikube
+minikube stop
+
+10) Check if minikube running
+minikube status
+
+11)To access services outside cluster
+minikube service ecommeureka-lb --url
