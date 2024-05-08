@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecommgateway
+  labels:
+    app: ecommgateway
+spec:
+  clusterIP: None
+  ports:
+    - port: 8080
+      name: ecommgateway
+  selector:
+    app: ecommgateway
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ecommgateway
+spec:
+  serviceName: "ecommgateway"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ecommgateway
+  template:
+    metadata:
+      labels:
+        app: ecommgateway
+    spec:
+      containers:
+        - name: ecommgateway
+          image: jeffinjude/ecomm-gateway-server:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+
+---                  
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecommgateway-lb
+  labels:
+    app: ecommgateway
+spec:
+  selector:
+    app: ecommgateway
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080

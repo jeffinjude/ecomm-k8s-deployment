@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomm-customer-app
+  labels:
+    app: ecomm-customer-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app : ecomm-customer-app
+  template:
+    metadata:
+      labels:
+        app: ecomm-customer-app
+    spec:
+      containers:
+      - name: ecomm-customer-app
+        image: jeffinjude/ecomm-customer:1.0.0
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8093
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  ecomm-customer-svc
+spec:
+  selector:
+    app:  ecomm-customer-app
+  ports:
+  - port:  8093
+    targetPort:  8093

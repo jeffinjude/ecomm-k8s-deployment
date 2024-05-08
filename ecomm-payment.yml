@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomm-payment-app
+  labels:
+    app: ecomm-payment-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app : ecomm-payment-app
+  template:
+    metadata:
+      labels:
+        app: ecomm-payment-app
+    spec:
+      containers:
+      - name: ecomm-payment-app
+        image: jeffinjude/ecomm-payment:1.0.0
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8095
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  ecomm-payment-svc
+spec:
+  selector:
+    app:  ecomm-payment-app
+  ports:
+  - port:  8095
+    targetPort:  8095

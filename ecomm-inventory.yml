@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomm-inventory-app
+  labels:
+    app: ecomm-inventory-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app : ecomm-inventory-app
+  template:
+    metadata:
+      labels:
+        app: ecomm-inventory-app
+    spec:
+      containers:
+      - name: ecomm-inventory-app
+        image: jeffinjude/ecomm-inventory:1.0.0
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8094
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  ecomm-inventory-svc
+spec:
+  selector:
+    app:  ecomm-inventory-app
+  ports:
+  - port:  8094
+    targetPort:  8094

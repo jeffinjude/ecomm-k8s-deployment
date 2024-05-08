@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomm-product-catalogue-app
+  labels:
+    app: ecomm-product-catalogue-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app : ecomm-product-catalogue-app
+  template:
+    metadata:
+      labels:
+        app: ecomm-product-catalogue-app
+    spec:
+      containers:
+      - name: ecomm-product-catalogue-app
+        image: jeffinjude/ecomm-product-catalogue:1.0.0
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8091
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  ecomm-product-catalogue-svc
+spec:
+  selector:
+    app:  ecomm-product-catalogue-app
+  ports:
+  - port:  8091
+    targetPort:  8091
